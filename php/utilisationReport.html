@@ -1,0 +1,108 @@
+<html>  
+      <head>  
+			<link href="style.css" rel="stylesheet" type="text/css">
+           <title>Resource Utilisation Report Generator</title>  
+           <meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+		   
+		   
+		   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+     
+	 
+			<link rel="stylesheet" href="print.css" type="text/css" media="print">
+			
+			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+			<link rel="stylesheet" href="/resources/demos/style.css">
+			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+			
+			 <ul>
+		<li><a href="index.php">Home</a></li>
+		<li><a href="about.php">About</a></li>
+		<li><a href="maintaindriver.html">Update Drivers</a></li>
+		<li><a href="maintainvehicle.html">Update Vehicles</a></li>
+		<li><a href="maintainroutes.html">Update Route</a></li>
+		<li><a href="maintainadmin.html">Update Admin</a></li>
+		<li><a href="utilisationReport.html">Utilisation Report</a></li>
+		<li><a  href="logout.php">Log Out</a></li>
+		</ul>
+			
+			
+  <script>
+        
+     
+	 
+  $( function() {
+    $( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+	    
+  } );
+  
+   $( function() {
+    $( "#datepicker2" ).datepicker({ dateFormat: "yy-mm-dd" });
+  } );
+  	 	 
+  
+	 $(document).on('click', '.btn_submit', function(){ 
+	 
+		var date1 = $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+	   
+        var date2 = $('#datepicker2').datepicker({ dateFormat: 'dd-mm-yy' }).val(); 
+		 
+
+	   
+	  if( $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val() == '')
+           {  
+                alert("Please choose date");  
+                return false;  
+           }  
+           if($('#datepicker2').datepicker({ dateFormat: 'dd-mm-yy' }).val() == '')  
+           {  
+                alert("Please choose date");  
+                return false;  
+           }  
+	 
+	 $.ajax({  
+                url:"utilisationReport.php",  
+                method:"POST",  
+                data:{date1:date1, date2:date2},  
+                dataType:"text",  
+                success:function(data)  
+                {  
+                      $('#live_data').html(data); 
+					  
+					  
+                }
+				
+				
+				});
+				
+	 });
+  
+  
+  </script>
+	</head>  
+      <body>  
+	
+ 
+
+           <div class="container">  
+                <br />  
+                <br />  
+                <br />  
+				<div id="content" class="print">
+                <div class="table-responsive">  
+                     <div id="main">   <h1>Resource Utilisation Report Generator</h1><br />  
+                     <div id="live_data"></div>  
+ <br/>					 
+						  <p>Start date: <input type="text" id="datepicker"></p>
+						   <p>End date :   <input type="text" id="datepicker2"></p>
+						    
+							<td><button type="button" name="submit_btn" data-id3="'.$row["stopID"].'" class="btn btn-sm btn-primary btn_submit">Submit</button></td>  
+				</div>			
+			   </div>  
+           </div>  
+		   </div>
+      </body>  
+ </html>  
